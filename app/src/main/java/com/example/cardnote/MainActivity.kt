@@ -876,7 +876,7 @@ fun NoteCard(
                                     }
                                 }
                             }
-                        )
+                        
                         } else if (note.images.size > 1) {
                             // 普通页码点
                             Row(
