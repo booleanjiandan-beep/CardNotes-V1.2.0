@@ -199,16 +199,16 @@ fun NoteBottomSheet(
     // newUris: 本次新选的 URI
     var newUris   by remember { mutableStateOf<List<Uri>>(emptyList()) }
 
-    val totalImageCount get() = keptPaths.size + newUris.size
+    fun totalImageCount() = keptPaths.size + newUris.size
 
     var cameraUri by remember { mutableStateOf<Uri?>(null) }
 
     val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
-        val canAdd = 9 - totalImageCount
+        val canAdd = 9 - totalImageCount()   
         newUris = (newUris + uris).distinct().take(newUris.size + canAdd.coerceAtLeast(0))
     }
     val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-        if (success) cameraUri?.let { if (totalImageCount < 9) newUris = newUris + it }
+        if (success) cameraUri?.let { if (totalImageCount() < 9) newUris = newUris + it  }
     }
     val cameraPermLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         if (granted) {
